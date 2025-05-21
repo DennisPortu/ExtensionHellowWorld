@@ -9,7 +9,10 @@ let ready = false;
 
 function startSession() {
   player = playerInput.value.trim();
-  if (!player) return alert('Posa un nom!');
+  if (!player || player.length < 2) {
+    return alert('Posa un nom vàlid (mínim 2 caràcters)!');
+  }
+  localStorage.setItem('currentPlayer', player);
   document.getElementById('login').style.display = 'none';
   document.getElementById('game').style.display = 'block';
   currentPlayer.textContent = player;
@@ -60,6 +63,26 @@ function updateRanking() {
   const sorted = Object.entries(data).sort((a, b) => a[1] - b[1]);
   rankingDiv.innerHTML = '';
   sorted.forEach(([name, time], i) => {
-    rankingDiv.innerHTML += `<div>${i+1}. ${name}: ${time} ms</div>`;
+    rankingDiv.innerHTML += `<div>${i + 1}. ${name}: ${time} ms</div>`;
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', startSession);
+  }
+
+  const resetBtn = document.getElementById('resetRankingBtn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      localStorage.removeItem('ranking');
+      updateRanking();
+    });
+  }
+
+  const savedPlayer = localStorage.getItem('currentPlayer');
+  if (savedPlayer) {
+    playerInput.value = savedPlayer;
+  }
+});

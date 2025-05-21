@@ -19,18 +19,14 @@
       color: white;
       cursor: pointer;
     }
-    #ranking {
-      text-align: left;
-      margin-top: 10px;
-      font-size: 14px;
-    }
   </style>
 </head>
 <body>
   <h2>Reflex Click</h2>
+
   <div id="login">
     <input type="text" id="playerName" placeholder="Introdueix el teu nom" />
-    <button onclick="startSession()">Comença</button>
+    <button id="startBtn">Comença</button>
   </div>
 
   <div id="game" style="display:none;">
@@ -39,8 +35,10 @@
     <div id="result"></div>
     <h3>Ranking</h3>
     <div id="ranking"></div>
+    <button id="resetRankingBtn">Reinicia ranking</button>
   </div>
 
+  <!-- JS separat per complir CSP -->
   <script src="popup.js"></script>
 </body>
 </html>
