@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Reflex Click",
-  "version": "1.0",
-  "description": "Un petit joc per provar els teus reflexos!",
+  "version": "2.0",
+  "description": "Joc de reflexos amb ranking!",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -12,5 +12,5 @@
   "icons": {
     "16": "icon.png"
   },
-  "permissions": []
+  "permissions": ["storage"]
 }
