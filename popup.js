@@ -3,6 +3,11 @@ const result = document.getElementById('result');
 const rankingDiv = document.getElementById('ranking');
 const playerInput = document.getElementById('playerName');
 const currentPlayer = document.getElementById('currentPlayer');
+const loginDiv = document.getElementById('login');
+const gameDiv = document.getElementById('game');
+const changePlayerBtn = document.getElementById('changePlayerBtn');
+const resetRankingBtn = document.getElementById('resetRankingBtn');
+
 let player = '';
 let startTime, timeout;
 let ready = false;
@@ -13,8 +18,8 @@ function startSession() {
     return alert('Posa un nom vàlid (mínim 2 caràcters)!');
   }
   localStorage.setItem('currentPlayer', player);
-  document.getElementById('login').style.display = 'none';
-  document.getElementById('game').style.display = 'block';
+  loginDiv.style.display = 'none';
+  gameDiv.style.display = 'block';
   currentPlayer.textContent = player;
   updateRanking();
   startGame();
@@ -67,22 +72,36 @@ function updateRanking() {
   });
 }
 
+changePlayerBtn.addEventListener('click', () => {
+  gameDiv.style.display = 'none';
+  loginDiv.style.display = 'block';
+  playerInput.value = '';
+  player = '';
+  result.textContent = '';
+  btn.style.backgroundColor = 'red';
+  btn.textContent = 'Espera...';
+});
+
+resetRankingBtn.addEventListener('click', () => {
+  if (confirm('Segur que vols reiniciar el ranking?')) {
+    localStorage.removeItem('ranking');
+    updateRanking();
+  }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById('startBtn');
   if (startBtn) {
     startBtn.addEventListener('click', startSession);
   }
 
-  const resetBtn = document.getElementById('resetRankingBtn');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      localStorage.removeItem('ranking');
-      updateRanking();
-    });
-  }
-
   const savedPlayer = localStorage.getItem('currentPlayer');
   if (savedPlayer) {
-    playerInput.value = savedPlayer;
+    player = savedPlayer;
+    loginDiv.style.display = 'none';
+    gameDiv.style.display = 'block';
+    currentPlayer.textContent = player;
+    updateRanking();
+    startGame();
   }
 });
